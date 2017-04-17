@@ -9,18 +9,22 @@
 #import "AppDelegate.h"
 #import "WXDemoViewController.h"
 #import "UIViewController+WXDemoNaviBar.h"
-#import "WXStreamModule.h"
 #import "WXEventModule.h"
-#import "WXNavigationDefaultImpl.h"
 #import "WXImgLoaderDefaultImpl.h"
 #import "DemoDefine.h"
 #import "WXScannerVC.h"
 #import "WXSyncTestModule.h"
 #import <WeexSDK/WeexSDK.h>
+#import "WXDevTool.h"
 #import <AVFoundation/AVFoundation.h>
 #import <ATSDK/ATManager.h>
 
 @interface AppDelegate ()
+{
+    NSString *_devtoolUrl;
+    NSString *_bundleUrl;
+    WXDemoViewController *_demoVC;
+}
 @end
 
 @implementation AppDelegate
@@ -66,6 +70,57 @@
 #endif
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+#if (TARGET_IPHONE_SIMULATOR)
+    NSLog(@"sourceApplication: %@", sourceApplication);
+    NSLog(@"URL scheme:%@", [url scheme]);
+    NSLog(@"URL query: %@", [url query]);
+    
+    NSString *parameterStr = [url query];
+    if (!parameterStr || [parameterStr isEqualToString:@""]) {
+        return NO;
+    }
+    NSArray *urlArr = [[url query] componentsSeparatedByString:@","];
+    if (!urlArr) {
+        return NO;
+    }
+    
+    switch (urlArr.count) {
+        case 1:
+        {
+            _devtoolUrl = urlArr[0];
+        }
+            break;
+        case 2:
+        {
+            _devtoolUrl = urlArr[0];
+            _bundleUrl = urlArr[1];
+        }
+            break;
+        default:
+            break;
+    }
+    if (_devtoolUrl && ![_devtoolUrl isEqualToString:@""]) {
+        [WXDevTool launchDevToolDebugWithUrl:_devtoolUrl];
+        
+        if (_demoVC && _bundleUrl) {
+            _demoVC.url = [NSURL URLWithString:_bundleUrl];
+            [_demoVC refreshWeex];
+        }
+        return YES;
+    }
+    return NO;
+    
+#else
+    return NO;
+    
+#endif
+}
+
 #pragma mark weex
 - (void)initWeexSDK
 {
@@ -102,20 +157,27 @@
 
 - (UIViewController *)demoController
 {
-    UIViewController *demo = [[WXDemoViewController alloc] init];
-    
+    if (!_demoVC) {
+        _demoVC = [[WXDemoViewController alloc] init];
+    }
 #if DEBUG
     //If you are debugging in device , please change the host to current IP of your computer.
-    ((WXDemoViewController *)demo).url = [NSURL URLWithString:BUNDLE_URL];
+    _demoVC.url = [NSURL URLWithString:BUNDLE_URL];
 #else
-    ((WXDemoViewController *)demo).url = [NSURL URLWithString:BUNDLE_URL];
+    _demoVC.url = [NSURL URLWithString:BUNDLE_URL];
 #endif
     
 #ifdef UITEST
-    ((WXDemoViewController *)demo).url = [NSURL URLWithString:UITEST_HOME_URL];
+    _demoVC.url = [NSURL URLWithString:UITEST_HOME_URL];
 #endif
     
-    return demo;
+#if (TARGET_IPHONE_SIMULATOR)
+    if (_bundleUrl && ![_bundleUrl isEqualToString:@""]) {
+        _demoVC.url = [NSURL URLWithString:_bundleUrl];
+    }
+#endif
+    
+    return _demoVC;
 }
 
 #pragma mark 
