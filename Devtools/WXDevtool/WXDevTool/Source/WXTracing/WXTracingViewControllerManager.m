@@ -86,47 +86,91 @@
     dispatch_queue_t concurrentQueue =dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_after(delayInNanoSeconds, concurrentQueue, ^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(0, 0, 80, 20);
-            [button setTitle:@"weex monitor" forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont boldSystemFontOfSize:10.0];
-            button.titleLabel.numberOfLines = 0;
-            [button addTarget:weakSelf action:@selector(showTracing) forControlEvents:UIControlEventTouchUpInside];
-            button.backgroundColor = [UIColor colorWithRed:1/255.0 green:140/255.0 blue:238/255.0 alpha:1.0];
-            button.tag = WXWeexButtonTag;
-            if([@"TB" isEqualToString:[[WXUtility getEnvironment] objectForKey:@"appName"]]){
-                button.hidden = YES;
-            }
-            [button setEnlargeEdgeWithTop:20 right:20.0 bottom:0.0 left:20.0];
-            WXTracingViewControllerManager *instance = [WXTracingViewControllerManager sharedInstance];
-            instance.wind = [[WXWindow alloc]initWithFrame:CGRectMake(80, 0, 80, 20)];
-            instance.wind.eventDelegate = instance;
-            [instance.wind addSubview:button];
-            instance.wind.windowLevel = UIWindowLevelStatusBar+100;
-            instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
-            instance.wind.userInteractionEnabled = YES;
-            instance.wind.hidden = NO;
-//            [instance.wind makeKeyAndVisible];
-//            [instance.wind makeKeyWindow];
-            [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
-            [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
-            [WXTracingViewControllerManager sharedInstance].textView.font = [UIFont systemFontOfSize:16];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            if(![defaults objectForKey:@"wxloglevel"]) {
-                [defaults setObject:@(WXLogLevelLog) forKey:@"wxloglevel"];
-                [defaults synchronize];
-            }
-            
-            WXDebugger *debugger = [WXDebugger defaultInstance];
-            [WXDebugger setEnabled:NO];//setting NO default
-            if([WXDebugger isEnabled]){
-                [debugger enableNetworkTrafficDebugging];
-                [debugger forwardAllNetworkTraffic];
-            }
-            
+            [weakSelf addTracingView];
         });
     });
     
+}
+
++(void)addTracingView
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 80, 20);
+    [button setTitle:@"weex monitor" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:10.0];
+    button.titleLabel.numberOfLines = 0;
+    [button addTarget:self action:@selector(showTracing) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithRed:1/255.0 green:140/255.0 blue:238/255.0 alpha:1.0];
+    button.tag = WXWeexButtonTag;
+    if([@"TB" isEqualToString:[[WXUtility getEnvironment] objectForKey:@"appName"]]){
+        button.hidden = YES;
+    }
+    [button setEnlargeEdgeWithTop:20 right:20.0 bottom:0.0 left:20.0];
+    WXTracingViewControllerManager *instance = [WXTracingViewControllerManager sharedInstance];
+    instance.wind = [[WXWindow alloc]initWithFrame:CGRectMake(80, 0, 80, 20)];
+    instance.wind.eventDelegate = instance;
+    [instance.wind addSubview:button];
+    instance.wind.windowLevel = UIWindowLevelStatusBar+100;
+    instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    instance.wind.userInteractionEnabled = YES;
+    instance.wind.hidden = NO;
+    //            [instance.wind makeKeyAndVisible];
+    //            [instance.wind makeKeyWindow];
+    [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
+    [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
+    [WXTracingViewControllerManager sharedInstance].textView.font = [UIFont systemFontOfSize:16];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(![defaults objectForKey:@"wxloglevel"]) {
+        [defaults setObject:@(WXLogLevelLog) forKey:@"wxloglevel"];
+        [defaults synchronize];
+    }
+    
+    WXDebugger *debugger = [WXDebugger defaultInstance];
+    [WXDebugger setEnabled:NO];//setting NO default
+    if([WXDebugger isEnabled]){
+        [debugger enableNetworkTrafficDebugging];
+        [debugger forwardAllNetworkTraffic];
+    }
+}
+
++ (void)resetView
+{
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 80, 20);
+    [button setTitle:@"weex monitor" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:10.0];
+    button.titleLabel.numberOfLines = 0;
+    [button addTarget:self action:@selector(showTracing) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithRed:1/255.0 green:140/255.0 blue:238/255.0 alpha:1.0];
+    button.tag = WXWeexButtonTag;
+    [button setEnlargeEdgeWithTop:20 right:20.0 bottom:0.0 left:20.0];
+    WXTracingViewControllerManager *instance = [WXTracingViewControllerManager sharedInstance];
+    instance.wind = [[WXWindow alloc]initWithFrame:CGRectMake(80, 0, 80, 20)];
+    instance.wind.eventDelegate = instance;
+    [instance.wind addSubview:button];
+    instance.wind.windowLevel = UIWindowLevelStatusBar+100;
+    instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+    instance.wind.userInteractionEnabled = YES;
+    instance.wind.hidden = NO;
+    //            [instance.wind makeKeyAndVisible];
+    //            [instance.wind makeKeyWindow];
+    [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
+    [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
+    [WXTracingViewControllerManager sharedInstance].textView.font = [UIFont systemFontOfSize:16];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(![defaults objectForKey:@"wxloglevel"]) {
+        [defaults setObject:@(WXLogLevelLog) forKey:@"wxloglevel"];
+        [defaults synchronize];
+    }
+    
+    WXDebugger *debugger = [WXDebugger defaultInstance];
+    [WXDebugger setEnabled:NO];//setting NO default
+    if([WXDebugger isEnabled]){
+        [debugger enableNetworkTrafficDebugging];
+        [debugger forwardAllNetworkTraffic];
+    }
+
 }
 
 - (void)viewDidLoad {
@@ -168,8 +212,11 @@
         [manager.nav.view removeFromSuperview];
         manager.wind.frame = CGRectMake(80, 0, 80, 20);
         [manager.wind resignKeyWindow];
-        UIView *view = [manager.wind viewWithTag:WXWeexButtonTag];
-        view.frame = CGRectMake(0, 0, 80, 20);
+        [manager.wind removeFromSuperview];
+        [self resetView];
+        
+//        UIView *view = [manager.wind viewWithTag:WXWeexButtonTag];
+//        view.frame = CGRectMake(0, 0, 80, 20);
         [WXTracingViewControllerManager sharedInstance].isLoadTracing = NO;
     }
     
