@@ -141,8 +141,12 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
     [alert addAction:copyButton];
     [alert addAction:cancelButton];
     UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-
-    [rootViewController presentViewController:alert animated:YES completion:nil];
+    if([rootViewController isKindOfClass:[UINavigationController class]]){
+        UINavigationController *nav = (UINavigationController *)rootViewController;
+        [nav presentViewController:alert animated:NO completion:nil];
+    }else{
+        [rootViewController presentViewController:alert animated:YES completion:nil];
+    }
     [WXTracingViewControllerManager sharedInstance].isAlert = YES;
 }
 

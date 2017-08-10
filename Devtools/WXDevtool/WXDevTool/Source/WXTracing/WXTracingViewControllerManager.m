@@ -105,7 +105,8 @@
             instance.wind.windowLevel = UIWindowLevelStatusBar+100;
             instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
             instance.wind.userInteractionEnabled = YES;
-            [instance.wind makeKeyAndVisible];
+            instance.wind.hidden = NO;
+//            [instance.wind makeKeyAndVisible];
 //            [instance.wind makeKeyWindow];
             [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
             [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
@@ -166,6 +167,7 @@
         [manager.tracingVC.view removeFromSuperview];
         [manager.nav.view removeFromSuperview];
         manager.wind.frame = CGRectMake(80, 0, 80, 20);
+        [manager.wind resignKeyWindow];
         UIView *view = [manager.wind viewWithTag:WXWeexButtonTag];
         view.frame = CGRectMake(0, 0, 80, 20);
         [WXTracingViewControllerManager sharedInstance].isLoadTracing = NO;
