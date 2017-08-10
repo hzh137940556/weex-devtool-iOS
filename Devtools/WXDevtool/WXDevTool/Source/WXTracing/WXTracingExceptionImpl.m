@@ -89,7 +89,7 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
 //        return;
 //    }
     
-    NSString *msg = [NSString stringWithFormat:@"%@\r\nIf you want to know more, please open weex MNT",message];
+    NSString *msg = [NSString stringWithFormat:@"%@\r\nIf you want to know more, please open weex monitor",message];
     UIAlertController * alert = [UIAlertController
                                  alertControllerWithTitle:@"JS Exception"
                                  message:msg
