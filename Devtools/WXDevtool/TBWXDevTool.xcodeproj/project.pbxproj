@@ -242,6 +242,8 @@
 		C42546251F27461000B93B0D /* WXWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = C42545E31F27461000B93B0D /* WXWindow.h */; };
 		C42546261F27461000B93B0D /* WXWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C42545E41F27461000B93B0D /* WXWindow.m */; };
 		C49207731F28927D002EF9D7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49207721F28927D002EF9D7 /* ImageIO.framework */; };
+		C4CB14801F3CA153001A1B5D /* WXTracingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CB147E1F3CA153001A1B5D /* WXTracingImpl.h */; };
+		C4CB14811F3CA153001A1B5D /* WXTracingImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CB147F1F3CA153001A1B5D /* WXTracingImpl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -485,6 +487,8 @@
 		C42545E31F27461000B93B0D /* WXWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXWindow.h; sourceTree = "<group>"; };
 		C42545E41F27461000B93B0D /* WXWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXWindow.m; sourceTree = "<group>"; };
 		C49207721F28927D002EF9D7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C4CB147E1F3CA153001A1B5D /* WXTracingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXTracingImpl.h; sourceTree = "<group>"; };
+		C4CB147F1F3CA153001A1B5D /* WXTracingImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXTracingImpl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -769,6 +773,8 @@
 		C42545A01F27461000B93B0D /* WXTracing */ = {
 			isa = PBXGroup;
 			children = (
+				C4CB147E1F3CA153001A1B5D /* WXTracingImpl.h */,
+				C4CB147F1F3CA153001A1B5D /* WXTracingImpl.m */,
 				C42545A11F27461000B93B0D /* PMTagListView */,
 				C42545A81F27461000B93B0D /* UIButton+WXEnlargeArea.h */,
 				C42545A91F27461000B93B0D /* UIButton+WXEnlargeArea.m */,
@@ -969,6 +975,7 @@
 				C425460D1F27461000B93B0D /* WXRenderTracingTableViewCell.h in Headers */,
 				C42545F91F27461000B93B0D /* WXMultilineTableViewCell.h in Headers */,
 				C42545ED1F27461000B93B0D /* WXAboutViewController.h in Headers */,
+				C4CB14801F3CA153001A1B5D /* WXTracingImpl.h in Headers */,
 				C42545E91F27461000B93B0D /* WXViewPagerController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1167,6 +1174,7 @@
 				0ADE97AF1D767B6F005781C1 /* WXInspectorDomainController.m in Sources */,
 				C42545F01F27461000B93B0D /* WXApiTracingViewController.m in Sources */,
 				0ADE97821D767B62005781C1 /* NSManagedObject+WXRuntimePropertyDescriptor.m in Sources */,
+				C4CB14811F3CA153001A1B5D /* WXTracingImpl.m in Sources */,
 				C42546041F27461000B93B0D /* WXNetworkTransactionDetailTableViewController.m in Sources */,
 				0ADE98421D767BB7005781C1 /* WXWebGLDomain.m in Sources */,
 				0ADE97D61D767B93005781C1 /* WXCSSTypes.m in Sources */,

@@ -106,7 +106,7 @@
             instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
             instance.wind.userInteractionEnabled = YES;
             [instance.wind makeKeyAndVisible];
-            [instance.wind makeKeyWindow];
+//            [instance.wind makeKeyWindow];
             [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
             [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
             [WXTracingViewControllerManager sharedInstance].textView.font = [UIFont systemFontOfSize:16];

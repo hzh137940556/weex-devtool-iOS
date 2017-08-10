@@ -85,9 +85,9 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
         return;
     }
     
-    if([WXTracingViewControllerManager sharedInstance].isAlert){
-        return;
-    }
+//    if([WXTracingViewControllerManager sharedInstance].isAlert){
+//        return;
+//    }
     
     NSString *msg = [NSString stringWithFormat:@"%@\r\nIf you want to know more, please open weex MNT",message];
     UIAlertController * alert = [UIAlertController
