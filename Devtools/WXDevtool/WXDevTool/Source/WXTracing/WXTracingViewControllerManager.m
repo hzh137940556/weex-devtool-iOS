@@ -43,10 +43,10 @@
     return instance;
 }
 
-+ (void)load
-{
-    [self loadTracingView];
-}
+//+ (void)load
+//{
+//    [self loadTracingView];
+//}
 
 +(void)showButton
 {
