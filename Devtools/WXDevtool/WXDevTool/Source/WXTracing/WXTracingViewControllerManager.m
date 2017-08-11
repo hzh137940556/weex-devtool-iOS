@@ -94,7 +94,7 @@
             [button addTarget:weakSelf action:@selector(showTracing) forControlEvents:UIControlEventTouchUpInside];
             button.backgroundColor = [UIColor colorWithRed:1/255.0 green:140/255.0 blue:238/255.0 alpha:1.0];
             button.tag = WXWeexButtonTag;
-            if([@"TB" isEqualToString:[[WXUtility getEnvironment] objectForKey:@"appName"]]){
+            if([@"TB" isEqualToString:[[WXUtility getEnvironment] objectForKey:@"appName"]]||[@"手机淘宝" isEqualToString:[[WXUtility getEnvironment] objectForKey:@"appName"]]){
                 button.hidden = YES;
             }
             [button setEnlargeEdgeWithTop:20 right:20.0 bottom:0.0 left:20.0];
