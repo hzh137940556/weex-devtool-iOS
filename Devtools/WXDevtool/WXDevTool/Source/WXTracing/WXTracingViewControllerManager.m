@@ -87,6 +87,7 @@
     dispatch_after(delayInNanoSeconds, concurrentQueue, ^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf addTracingView];
+
         });
     });
     
