@@ -73,6 +73,7 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
             NSMutableArray *messages = [WXTracingViewControllerManager sharedInstance].messages;
             [messages addObject:strMsg];
             [self showAlert:strMsg];
+            [WXTracingViewControllerManager showButton];
         }
 
     });
