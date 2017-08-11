@@ -336,9 +336,9 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             Class propertyClass = NSClassFromString(@"WXExtendCallNativeManager");
-            SEL sel =NSSelectorFromString(@"sendExtendCallNativeEvent");
+            SEL sel =NSSelectorFromString(@"sendExtendCallNativeEvent:");
             if(propertyClass && [propertyClass respondsToSelector:sel]){
-                id value = [propertyClass performSelector:sel];
+                id value = [propertyClass performSelector:sel withObject:data[@"value"]];
             }
 #pragma clang diagnostic pop
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
