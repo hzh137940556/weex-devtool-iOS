@@ -337,7 +337,7 @@
             Class propertyClass = NSClassFromString(@"WXExtendCallNativeManager");
             SEL sel =NSSelectorFromString(@"sendExtendCallNativeEvent:");
             if(propertyClass && [propertyClass respondsToSelector:sel]){
-                id value = [propertyClass performSelector:sel withObject:data[@"value"]];
+                value = [propertyClass performSelector:sel withObject:data[@"value"]];
             }
 #pragma clang diagnostic pop
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
