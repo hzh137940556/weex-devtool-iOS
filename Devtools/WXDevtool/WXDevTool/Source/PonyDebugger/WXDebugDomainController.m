@@ -332,7 +332,15 @@
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             [result setObject:params forKey:@"params"];
         }else if([method isEqualToString:@"extendCallNative"]) {
-            id value =  [WXExtendCallNativeManager sendExtendCallNativeEvent:data[@"value"]];
+            id value = [NSDictionary new];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            Class propertyClass = NSClassFromString(@"WXExtendCallNativeManager");
+            SEL sel =NSSelectorFromString(@"sendExtendCallNativeEvent");
+            if(propertyClass && [propertyClass respondsToSelector:sel]){
+                id value = [propertyClass performSelector:sel];
+            }
+#pragma clang diagnostic pop
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             [params setObject:value forKey:@"ret"];
             [result setObject:params forKey:@"params"];
