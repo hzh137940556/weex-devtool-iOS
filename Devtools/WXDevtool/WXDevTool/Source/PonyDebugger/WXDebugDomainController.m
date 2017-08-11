@@ -11,7 +11,7 @@
 #import "WXDeviceInfo.h"
 #import "WXDebuggerUtility.h"
 #import <WeexSDK/WeexSDK.h>
-#import "WXExtendCallNativeManager.h"
+#import <WeexSDK/WXExtendCallNativeManager.h>
 
 #define SYNCRETURN @"WxDebug.syncReturn"
 
