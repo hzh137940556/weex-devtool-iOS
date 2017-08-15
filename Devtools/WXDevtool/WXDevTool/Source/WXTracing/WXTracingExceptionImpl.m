@@ -60,6 +60,10 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
 
 @implementation WXTracingExceptionImpl
 
+-(void)onRuntimeCheckException:(WXJSExceptionInfo *) exception
+{
+    [self onJSException:exception];
+}
 
 - (void)onJSException:(WXJSExceptionInfo*) exception
 {
