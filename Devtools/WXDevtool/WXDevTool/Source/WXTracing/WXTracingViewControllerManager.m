@@ -154,24 +154,7 @@
     instance.wind.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
     instance.wind.userInteractionEnabled = YES;
     instance.wind.hidden = NO;
-    //            [instance.wind makeKeyAndVisible];
-    //            [instance.wind makeKeyWindow];
-    [WXTracingViewControllerManager sharedInstance].textView = [UITextView new];
-    [WXTracingViewControllerManager sharedInstance].messages = [NSMutableArray new];
-    [WXTracingViewControllerManager sharedInstance].textView.font = [UIFont systemFontOfSize:16];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(![defaults objectForKey:@"wxloglevel"]) {
-        [defaults setObject:@(WXLogLevelLog) forKey:@"wxloglevel"];
-        [defaults synchronize];
-    }
     
-    WXDebugger *debugger = [WXDebugger defaultInstance];
-    [WXDebugger setEnabled:NO];//setting NO default
-    if([WXDebugger isEnabled]){
-        [debugger enableNetworkTrafficDebugging];
-        [debugger forwardAllNetworkTraffic];
-    }
-
 }
 
 - (void)viewDidLoad {

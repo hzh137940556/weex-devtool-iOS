@@ -62,7 +62,20 @@ static const CGFloat WXTacingDefaultPadding = 30.0;
 
 -(void)onRuntimeCheckException:(WXJSExceptionInfo *) exception
 {
-    [self onJSException:exception];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *instanceId =  [[[WXSDKManager bridgeMgr] getInstanceIdStack] firstObject];
+        NSMutableDictionary *taskData = [WXTracingManager getTracingData];
+        WXTracingTask *task = [taskData objectForKey:instanceId];
+        NSString *strTmp = [NSString stringWithFormat:@"<Weex>[exception]bundleJSType:%@\r\n%@ appVersion:%@ osVersion:%@ platform:%@ deviceModel:%@\r\n",task.bundleJSType,exception.description,[[WXUtility getEnvironment] objectForKey:@"appVersion"],[[WXUtility getEnvironment] objectForKey:@"osVersion"],[[WXUtility getEnvironment] objectForKey:@"platform"],[[WXUtility getEnvironment] objectForKey:@"deviceModel"]];
+        NSString *strMsg = [NSString stringWithFormat:@"%zd: %@ %@ %@",[[WXTracingViewControllerManager sharedInstance].messages count],[WXTracingUtility tracingTime] ,[[WXUtility getEnvironment] objectForKey:@"appName"],strTmp];
+        if(strTmp.length>0){
+            NSMutableArray *messages = [WXTracingViewControllerManager sharedInstance].messages;
+            [messages addObject:strMsg];
+            [self showAlert:strMsg];
+            [WXTracingViewControllerManager showButton];
+        }
+        
+    });
 }
 
 - (void)onJSException:(WXJSExceptionInfo*) exception
