@@ -28,7 +28,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12, 320, 20)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 320, 20)];
         _nameLabel.font = [UIFont systemFontOfSize:20];
         _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _nameLabel.numberOfLines = 0;
@@ -65,6 +65,6 @@
     //计算出自适应的高度
     frame.size.height = ceil(expectedLabelSize.size.height)+20;
     
-    self.frame = frame;
+    self.nameLabel.frame = CGRectMake(10,(self.contentView.frame.size.height - frame.size.height)/2, frame.size.width, frame.size.height);
 }
 @end

@@ -71,6 +71,9 @@
     UITableViewCell *weexCell = [self aboutWithTitle:@"关于weex"];
     [mutableCells addObject:weexCell];
     
+    UITableViewCell *weexMonitorCell = [self aboutWithTitle:@"weex monitor 问题请联系：齐山"];
+    [mutableCells addObject:weexMonitorCell];
+    
     self.cells = mutableCells;
 }
 

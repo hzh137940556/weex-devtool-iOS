@@ -24,6 +24,10 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableArray *messages = [WXTracingViewControllerManager sharedInstance].messages;
+        NSRange range = [message rangeOfString:@"<weex>"];
+        if(range.location != NSNotFound){
+            
+        }
         NSString *strMsg = [NSString stringWithFormat:@"%zd: %@ %@ %@",[[WXTracingViewControllerManager sharedInstance].messages count],[WXTracingUtility tracingTime] ,[[WXUtility getEnvironment] objectForKey:@"appName"],message];
         [messages addObject:strMsg];
     });

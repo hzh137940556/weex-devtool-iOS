@@ -33,11 +33,12 @@
         _refLabel.font = [UIFont systemFontOfSize:14];
         [self.contentView addSubview:_refLabel];
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 5, 180, 20)];
+
         [self.contentView addSubview:_nameLabel];
         _nameLabel.font = [UIFont systemFontOfSize:14];
-//        _tNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 5, 200, 20)];
-//        [self.contentView addSubview:_tNameLabel];
-//        _tNameLabel.font = [UIFont systemFontOfSize:14];
+        _tNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 5, 200, 20)];
+        [self.contentView addSubview:_tNameLabel];
+        _tNameLabel.font = [UIFont systemFontOfSize:14];
         _classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 140, 20)];
         [self.contentView addSubview:_classNameLabel];
         _classNameLabel.font = [UIFont systemFontOfSize:14];
@@ -63,6 +64,9 @@
 //    if( [WXTracing instancesRespondToSelector:@selector(threadName)]){
 //        self.tNameLabel.text = [NSString stringWithFormat:@"thread:%@",[tracing performSelector:@selector(threadName) withObject:nil]?:@""];
 //    }
+//    self.refLabel.text = [NSString stringWithFormat:@"ref:%@ %lld %lld",tracing.ref?:@"",tracing.traceId, tracing.parentId];
+//    self.nameLabel.text = [NSString stringWithFormat:@"name:%@",tracing.name?:@""];
+//    self.tNameLabel.text = [NSString stringWithFormat:@"thread:%@",tracing.threadName?:@""];
     self.fNameLabel.text = [NSString stringWithFormat:@"function:%@",tracing.fName?:@""];
     if(tracing.className.length>0){
         self.classNameLabel.text = [NSString stringWithFormat:@"class:%@",tracing.className?:@""];
@@ -71,7 +75,7 @@
         self.classNameLabel.text = @"";
     }
     self.startTimeLabel.text = [NSString stringWithFormat:@"start:%@",[self getStartTime:tracing.ts]];
-    self.durationLabel.text = [NSString stringWithFormat:@"duration:%0.f(ms)",tracing.duration];
+    self.durationLabel.text = [NSString stringWithFormat:@"duration:%0.2f(ms)",tracing.duration];
     if(!self.bgColor){
         self.bgColor = [self randomColor];
         _timeBackgroundLabel.backgroundColor = self.bgColor;

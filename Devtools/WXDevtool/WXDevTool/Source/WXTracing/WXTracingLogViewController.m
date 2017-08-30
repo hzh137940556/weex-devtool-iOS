@@ -14,7 +14,7 @@
 #import "WXTracingViewControllerManager.h"
 #import "WXTracingUtility.h"
 
-@interface WXTracingLogViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating>
+@interface WXTracingLogViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 
 @property (strong,nonatomic) UITableView *table;
 @property (nonatomic ,strong)NSMutableArray *searchArr;
@@ -138,12 +138,8 @@
     //    NSLog(@"title of cell %@", [_content objectAtIndex:indexPath.row]);
 }
 
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-//    if([self.searchVC.searchBar text].length ==0 && self.searchVC.isActive){
-//        return;
-//    }
     NSString *searchString = [self.searchVC.searchBar text];
     NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     if (self.searchArr!= nil) {
@@ -155,6 +151,14 @@
     [self.table reloadData];
 }
 
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+//    if([self.searchVC.searchBar text].length ==0 && self.searchVC.isActive){
+//        return;
+//    }
+    
+}
+
 - (UISearchController *)searchVC
 {
     if (!_searchVC) {
@@ -164,6 +168,7 @@
         _searchVC.dimsBackgroundDuringPresentation = NO;
         
         _searchVC.hidesNavigationBarDuringPresentation = NO;
+        _searchVC.searchBar.delegate = self;
         
         _searchVC.searchBar.frame = CGRectMake(self.searchVC.searchBar.frame.origin.x, self.searchVC.searchBar.frame.origin.y, self.searchVC.searchBar.frame.size.width, 44.0);
         
