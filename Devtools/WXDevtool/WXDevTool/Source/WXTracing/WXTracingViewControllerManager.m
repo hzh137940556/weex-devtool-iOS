@@ -26,6 +26,7 @@
 @property(nonatomic,strong) WXWindow *wind;
 @property(nonatomic)BOOL isLoad;
 @property(nonatomic)BOOL isLoadTracing;
+@property(nonatomic)BOOL isShowButton;
 
 @end
 
@@ -51,8 +52,14 @@
 +(void)showButton
 {
     WXTracingViewControllerManager *manager = [WXTracingViewControllerManager sharedInstance];
+    if(manager.isShowButton){
+        return;
+    }
     UIView *view = [manager.wind viewWithTag:WXWeexButtonTag];
     view.hidden = NO;
+    if(view){
+        manager.isShowButton = YES;
+    }
 }
 
 +(void)loadTracingView

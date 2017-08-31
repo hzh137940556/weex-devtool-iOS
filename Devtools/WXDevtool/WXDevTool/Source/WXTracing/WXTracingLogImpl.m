@@ -22,6 +22,7 @@
 }
 - (void)log:(WXLogFlag)flag message:(NSString *)message
 {
+    [WXTracingViewControllerManager showButton];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSMutableArray *messages = [WXTracingViewControllerManager sharedInstance].messages;
         NSRange range = [message rangeOfString:@"<weex>"];
