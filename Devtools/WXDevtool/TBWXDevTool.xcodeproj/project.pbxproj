@@ -244,6 +244,8 @@
 		C49207731F28927D002EF9D7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49207721F28927D002EF9D7 /* ImageIO.framework */; };
 		C4CB14801F3CA153001A1B5D /* WXTracingImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CB147E1F3CA153001A1B5D /* WXTracingImpl.h */; };
 		C4CB14811F3CA153001A1B5D /* WXTracingImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CB147F1F3CA153001A1B5D /* WXTracingImpl.m */; };
+		C4D18EB41F57B9D400779D9F /* WXSubRenderTracingTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C4D18EB21F57B9D400779D9F /* WXSubRenderTracingTableViewCell.h */; };
+		C4D18EB51F57B9D400779D9F /* WXSubRenderTracingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D18EB31F57B9D400779D9F /* WXSubRenderTracingTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -489,6 +491,8 @@
 		C49207721F28927D002EF9D7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C4CB147E1F3CA153001A1B5D /* WXTracingImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXTracingImpl.h; sourceTree = "<group>"; };
 		C4CB147F1F3CA153001A1B5D /* WXTracingImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXTracingImpl.m; sourceTree = "<group>"; };
+		C4D18EB21F57B9D400779D9F /* WXSubRenderTracingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXSubRenderTracingTableViewCell.h; sourceTree = "<group>"; };
+		C4D18EB31F57B9D400779D9F /* WXSubRenderTracingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXSubRenderTracingTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -813,6 +817,8 @@
 				C42545E21F27461000B93B0D /* WXTracingViewControllerManager.m */,
 				C42545E31F27461000B93B0D /* WXWindow.h */,
 				C42545E41F27461000B93B0D /* WXWindow.m */,
+				C4D18EB21F57B9D400779D9F /* WXSubRenderTracingTableViewCell.h */,
+				C4D18EB31F57B9D400779D9F /* WXSubRenderTracingTableViewCell.m */,
 			);
 			name = WXTracing;
 			path = Source/WXTracing;
@@ -928,6 +934,7 @@
 				0ADE981B1D767BA5005781C1 /* WXMemoryTypes.h in Headers */,
 				0ADE980B1D767BA5005781C1 /* WXDOMStorageTypes.h in Headers */,
 				C425461B1F27461000B93B0D /* WXTracingLogViewController.h in Headers */,
+				C4D18EB41F57B9D400779D9F /* WXSubRenderTracingTableViewCell.h in Headers */,
 				0ADE98211D767BA5005781C1 /* WXPageDomain.h in Headers */,
 				0ADE98411D767BB7005781C1 /* WXWebGLDomain.h in Headers */,
 				C42545F71F27461000B93B0D /* WXLogSettingViewController.h in Headers */,
@@ -1135,6 +1142,7 @@
 				C42546101F27461000B93B0D /* WXRenderTracingViewController.m in Sources */,
 				C42546161F27461000B93B0D /* WXTracingHomePageViewController.m in Sources */,
 				C42546181F27461000B93B0D /* WXTracingLogImpl.m in Sources */,
+				C4D18EB51F57B9D400779D9F /* WXSubRenderTracingTableViewCell.m in Sources */,
 				0A01031D1D35E25300F0D592 /* WXSourceDebuggerDomainController.m in Sources */,
 				0ADE97A91D767B6F005781C1 /* WXDOMDomainController.m in Sources */,
 				C42545EE1F27461000B93B0D /* WXAboutViewController.m in Sources */,

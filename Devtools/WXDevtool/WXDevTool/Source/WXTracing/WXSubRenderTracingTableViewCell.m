@@ -6,11 +6,12 @@
 //  Copyright © 2017年 Taobao. All rights reserved.
 //
 
-#import "WXRenderTracingTableViewCell.h"
-@interface WXRenderTracingTableViewCell()
+#import "WXSubRenderTracingTableViewCell.h"
+#define LEFTPAD 30
+@interface WXSubRenderTracingTableViewCell()
 @property(nonatomic,strong)UIColor *bgColor;
 @end
-@implementation WXRenderTracingTableViewCell
+@implementation WXSubRenderTracingTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -19,7 +20,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -29,26 +30,26 @@
     if (self) {
         _timeBackgroundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 80)];
         [self.contentView addSubview:_timeBackgroundLabel];
-        _refLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 140, 20)];
+        _refLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 10, 5, 140, 20)];
         _refLabel.font = [UIFont systemFontOfSize:14];
         [self.contentView addSubview:_refLabel];
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 5, 180, 20)];
-
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 100, 5, 180, 20)];
+        
         [self.contentView addSubview:_nameLabel];
         _nameLabel.font = [UIFont systemFontOfSize:14];
-        _tNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 5, 200, 20)];
+        _tNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 180, 5, 200, 20)];
         [self.contentView addSubview:_tNameLabel];
         _tNameLabel.font = [UIFont systemFontOfSize:14];
-        _fNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake( 10, 30, 140, 20)];
+        _fNameLabel  = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 10, 30, 140, 20)];
         [self.contentView addSubview:_fNameLabel];
         _fNameLabel.font = [UIFont systemFontOfSize:14];
-        _classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 30, 200, 20)];
+        _classNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 160, 30, 200, 20)];
         [self.contentView addSubview:_classNameLabel];
         _classNameLabel.font = [UIFont systemFontOfSize:14];
-        _startTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 55, 140, 20)];
+        _startTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 10, 55, 140, 20)];
         [self.contentView addSubview:_startTimeLabel];
         _startTimeLabel.font = [UIFont systemFontOfSize:14];
-        _durationLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 55, 200, 20)];
+        _durationLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFTPAD + 160, 55, 200, 20)];
         [self.contentView addSubview:_durationLabel];
         _durationLabel.font = [UIFont systemFontOfSize:14];
     }
@@ -56,20 +57,17 @@
     return self;
 }
 
-- (void)config:(WXShowTracing *)tracing begin:(NSTimeInterval)begin end:(NSTimeInterval )end
+- (void)config:(WXTracing *)tracing begin:(NSTimeInterval)begin end:(NSTimeInterval )end
 {
-    self.refLabel.text = [NSString stringWithFormat:@"ref:%@ %lld %lld",tracing.ref?:@"",tracing.traceId,tracing.parentId];
+        self.refLabel.text = [NSString stringWithFormat:@"ref:%@ %lld %lld",tracing.ref?:@"",tracing.traceId,tracing.parentId];
     self.refLabel.text = [NSString stringWithFormat:@"ref:%@",tracing.ref?:@""];
     self.nameLabel.text = [NSString stringWithFormat:@"name:%@",tracing.name?:@""];
-    if( [tracing.subTracings count]>0){
-        self.tNameLabel.text = @"查看详情";
-    }else
-    {
-        self.tNameLabel.text = @"";
+    if( [WXTracing instancesRespondToSelector:@selector(threadName)]){
+        self.tNameLabel.text = [NSString stringWithFormat:@"thread:%@",[tracing performSelector:@selector(threadName) withObject:nil]?:@""];
     }
 //    self.refLabel.text = [NSString stringWithFormat:@"ref:%@ %lld %lld",tracing.ref?:@"",tracing.traceId, tracing.parentId];
-//    self.nameLabel.text = [NSString stringWithFormat:@"name:%@",tracing.name?:@""];
-//    self.tNameLabel.text = [NSString stringWithFormat:@"thread:%@",tracing.threadName?:@""];
+    //    self.nameLabel.text = [NSString stringWithFormat:@"name:%@",tracing.name?:@""];
+    //    self.tNameLabel.text = [NSString stringWithFormat:@"thread:%@",tracing.threadName?:@""];
     self.fNameLabel.text = [NSString stringWithFormat:@"function:%@",tracing.fName?:@""];
     if(tracing.className.length>0){
         self.classNameLabel.text = [NSString stringWithFormat:@"class:%@",tracing.className?:@""];

@@ -14,6 +14,10 @@
 @property (nonatomic) NSTimeInterval end;
 @end
 
+@interface WXShowTracing : WXTracing
+@property (nonatomic,strong)NSMutableArray *subTracings;
+@end
+
 @interface WXRenderTracingViewController : UIViewController
 
 - (instancetype)initWithFrame:(CGRect )frame;
