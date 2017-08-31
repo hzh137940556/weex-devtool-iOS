@@ -44,6 +44,7 @@ static BOOL WXIsVDom = NO;
 
 NSString *const kWXNetworkObserverEnabledStateChangedNotification = @"kWXNetworkObserverEnabledStateChangedNotification";
 static NSString *const kWXNetworkObserverEnabledDefaultsKey = @"com.taobao.WXNetworkObserver.enableOnLaunch";
+static NSString *const kWXPerfomanceRenderFinishEnabledDefaultsKey = @"com.taobao.WXPerfomance.renderFinish";
 
 void _WXLogObjectsImpl(NSString *severity, NSArray *arguments)
 {
@@ -769,6 +770,19 @@ void _WXLogObjectsImpl(NSString *severity, NSArray *arguments)
 + (BOOL)isEnabled
 {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:kWXNetworkObserverEnabledDefaultsKey] boolValue];
+}
+
+
++ (void)setRenderFinishEnabled:(BOOL)renderFinishEnabled
+{
+    NSUserDefaults *uDefault = [NSUserDefaults standardUserDefaults];
+    [uDefault setBool:renderFinishEnabled forKey:kWXPerfomanceRenderFinishEnabledDefaultsKey];
+    [uDefault synchronize];
+}
+
++ (BOOL)renderFinishEnabled
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:kWXPerfomanceRenderFinishEnabledDefaultsKey] boolValue];
 }
 
 @end

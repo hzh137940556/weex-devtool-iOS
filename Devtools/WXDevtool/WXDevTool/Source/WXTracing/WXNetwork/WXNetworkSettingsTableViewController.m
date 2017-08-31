@@ -68,6 +68,9 @@
     UITableViewCell *clearRecordedRequestsCell = [self buttonCellWithTitle:@"❌  清除请求记录" touchUpAction:@selector(clearRequestsTapped:) isDestructive:YES];
     [mutableCells addObject:clearRecordedRequestsCell];
     
+    UITableViewCell *performanceDebuggingCell = [self switchCellWithTitle:@"仅统计到renderFinish" toggleAction:@selector(renderFinishToggled:) isOn:[WXDebugger renderFinishEnabled]];
+    [mutableCells addObject:performanceDebuggingCell];
+    
     UITableViewCell *weexCell = [self aboutWithTitle:@"关于weex"];
     [mutableCells addObject:weexCell];
     
@@ -89,6 +92,12 @@
 {
     [WXDebugger setEnabled:sender.isOn];
 }
+
+- (void)renderFinishToggled:(UISwitch *)sender
+{
+    [WXDebugger setRenderFinishEnabled:sender.isOn];
+}
+
 
 - (void)logLevelDebuggingToggled
 {

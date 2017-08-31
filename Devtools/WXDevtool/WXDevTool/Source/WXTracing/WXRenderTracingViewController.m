@@ -151,6 +151,7 @@
     self.tasks = [NSMutableArray new];
     NSMutableDictionary *taskData = [[WXTracingManager getTracingData] mutableCopy];
     NSArray *instanceIds = [[WXSDKManager bridgeMgr] getInstanceIdStack];
+    BOOL isRenderFinish = [WXDebugger renderFinishEnabled];
     if(instanceIds && [instanceIds count] >0){
         for (NSInteger i = 0; i< [instanceIds count]; i++) {
             NSString *instanceId =instanceIds[i];
@@ -192,9 +193,11 @@
                         [showTracing.subTracings addObject:tracing];
                     }
                 }
-                if([@"renderFinish" isEqualToString:tracing.fName] && [WXTracingInstant isEqualToString:tracing.ph] && [WXTUIThread isEqualToString:tracing.threadName])
-                {
-                    break;
+                if(isRenderFinish){
+                    if([@"renderFinish" isEqualToString:tracing.fName] && [WXTracingInstant isEqualToString:tracing.ph] && [WXTUIThread isEqualToString:tracing.threadName])
+                    {
+                        break;
+                    }
                 }
             }
             for(WXShowTracing *tracing in tracings){
