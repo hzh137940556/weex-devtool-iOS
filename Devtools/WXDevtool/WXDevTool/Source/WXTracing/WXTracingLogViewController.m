@@ -151,6 +151,12 @@
     [self.table reloadData];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchVC.active = NO;
+    [self.table reloadData];
+}
+
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 //    if([self.searchVC.searchBar text].length ==0 && self.searchVC.isActive){
