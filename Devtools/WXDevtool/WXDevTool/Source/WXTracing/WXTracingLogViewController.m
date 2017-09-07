@@ -154,6 +154,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     self.searchVC.active = NO;
+    self.searchArr = [self.logArr mutableCopy];
     [self.table reloadData];
 }
 
