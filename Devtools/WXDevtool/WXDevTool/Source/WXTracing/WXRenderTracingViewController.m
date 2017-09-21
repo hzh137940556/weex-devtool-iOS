@@ -27,6 +27,8 @@
 @property (nonatomic) NSTimeInterval begin;
 @property (nonatomic) NSTimeInterval end;
 @property (nonatomic,copy) NSString *sectionTitle;
+@property (nonatomic,copy) NSString *tracingButtonTitle;
+@property (strong,nonatomic) UIButton *tracingButton;
 @property (assign, nonatomic) BOOL isExpand; //是否展开
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;//展开的cell的下标
 
@@ -50,6 +52,34 @@
     self.view.frame =  CGRectMake(0, 0, rect.size.width, rect.size.height);
     [self cofigureTableview];
     
+    self.tracingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.tracingButton.frame = CGRectMake(rect.size.width-120, 10, 100, 30);
+    
+    if([WXTracingManager isTracing]){
+        self.tracingButtonTitle = @"关闭监控";
+    }else{
+        self.tracingButtonTitle = @"打开监控";
+    }
+    
+    [self.tracingButton setTitle:self.tracingButtonTitle forState:UIControlStateNormal];
+    self.tracingButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+    self.tracingButton.titleLabel.numberOfLines = 0;
+    [self.tracingButton addTarget:self action:@selector(switchTracingOn) forControlEvents:UIControlEventTouchUpInside];
+    self.tracingButton.backgroundColor = [UIColor colorWithRed:1/255.0 green:140/255.0 blue:238/255.0 alpha:0.8];
+    [self.view addSubview:self.tracingButton];
+    
+}
+
+-(void)switchTracingOn
+{
+    BOOL isTracing = [WXTracingManager isTracing];
+    [WXTracingManager switchTracing:!isTracing];
+    if([WXTracingManager isTracing]){
+        self.tracingButtonTitle = @"关闭监控";
+    }else{
+        self.tracingButtonTitle = @"打开监控";
+    }
+    [self.tracingButton setTitle:self.tracingButtonTitle forState:UIControlStateNormal];
 }
 
 -(void)refreshNewData
@@ -96,6 +126,7 @@
         self.tasks = [NSMutableArray new];
         [self.tasks addObject:showTask];
     }
+    
     [self.table reloadData];
 }
 
@@ -366,7 +397,11 @@
     [label setFont:[UIFont boldSystemFontOfSize:14]];
     NSString *string = [NSString stringWithFormat:@"instanceId:%@",task.iid];
     if(!task.iid){
-        string = @"暂时没有weex页面渲染";
+        if([WXTracingManager isTracing]){
+            string = @"暂时没有weex页面渲染";
+        }else{
+            string = @"监控已关闭，请打开";
+        }
     }
     /* Section header is in 0th index... */
     [label setText:string];
