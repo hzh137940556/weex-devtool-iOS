@@ -65,10 +65,14 @@
 +(void)loadTracingView
 {
     
-    [WXTracingManager switchTracing:YES];
-    if(![WXTracingManager isTracing]) {
-        return;
-    }
+    /*
+     // Zechang.xzc edit,dont start Tracing by default,but show zhe weex view
+     [WXTracingManager switchTracing:YES];
+     if(![WXTracingManager isTracing]) {
+     return;
+     }
+     */
+    [WXTracingManager switchTracing:NO];
     if(![WXTracingViewControllerManager sharedInstance].isLoad){
         [WXTracingViewControllerManager sharedInstance].isLoad = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
