@@ -10,7 +10,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SRWebSocket.h"
+#import <SocketRocket/SRWebSocket.h>
 #import "WXDebugger.h"
 #import "WXDynamicDebuggerDomain.h"
 #import "WXNetworkDomain.h"
