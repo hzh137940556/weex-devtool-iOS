@@ -12,6 +12,7 @@
 #import <zlib.h>
 #import <objc/runtime.h>
 #import "WXDebugTool.h"
+#import <WeexSDK/WXDebugTool.h>
 
 @implementation WXTracingUtility
 
