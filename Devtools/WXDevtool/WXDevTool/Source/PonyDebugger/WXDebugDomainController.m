@@ -307,17 +307,20 @@
             NSDictionary *optionsDic = args[4] ? : [NSDictionary dictionary];
             
             WXLog(@"callNativeModule...%@,%@,%@,%@", instanceIdString, moduleNameString, methodNameString, argsArray);
-            
-            NSInvocation *invocation = _nativeModuleBlock(instanceIdString, moduleNameString, methodNameString, argsArray, optionsDic);
-            id object = [WXDebuggerUtility switchInvocationReture:invocation];
-            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-            [params setObject:syncId forKey:@"syncId"];
-            if (object) {
-                [params setObject:object forKey:@"ret"];
-            }else {
-                error = [[NSError alloc] init];
+            if(_nativeModuleBlock){
+                NSInvocation *invocation = _nativeModuleBlock(instanceIdString, moduleNameString, methodNameString, argsArray, optionsDic);
+                id object = [WXDebuggerUtility switchInvocationReture:invocation];
+                NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+                [params setObject:syncId forKey:@"syncId"];
+                if (object) {
+                    [params setObject:object forKey:@"ret"];
+                }else {
+                    error = [[NSError alloc] init];
+                }
+                [result setObject:params forKey:@"params"];
+            }else{
+                error = [NSError errorWithDomain:(NSErrorDomain)@"callNativeModule error" code:500 userInfo:nil];
             }
-            [result setObject:params forKey:@"params"];
         }else if ([method isEqualToString:@"callNativeComponent"]) {
             NSString *instanceIdString = args[0] ? : @"";
             NSString *componentNameString = args[1] ? : @"";
