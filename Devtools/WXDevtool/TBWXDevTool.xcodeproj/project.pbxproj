@@ -1015,7 +1015,6 @@
 				0AFA0EC61D2CE79E006E30BB /* Sources */,
 				0AFA0EC71D2CE79E006E30BB /* Frameworks */,
 				0AFA0EC81D2CE79E006E30BB /* Headers */,
-				0AFA0EC91D2CE79E006E30BB /* Resources */,
 				0AFECA031D76C75E0035719C /* ShellScript */,
 			);
 			buildRules = (
@@ -1066,16 +1065,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		0AFA0EC91D2CE79E006E30BB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		0ABB39F71D3F377B0091332E /* ShellScript */ = {
