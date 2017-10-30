@@ -184,16 +184,30 @@
 - (void)domain:(WXDynamicDebuggerDomain *)domain enableWithCallback:(void (^)(id error))callback {
     [WXDevToolType setDebug:YES];
     [WXSDKEngine restart];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
-    callback(nil);
+    // we need to wait for jsfm loaded. From gurisxie
+    [self performSelector:@selector(enableWithCallback:) withObject:callback afterDelay:0.5];
+}
+
+-(void)enableWithCallback:(void (^)(id error))callback{
+    [self _executeBridgeThead:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
+        callback(nil);
+    }];
 }
 
 - (void)domain:(WXDynamicDebuggerDomain *)domain disableWithCallback:(void (^)(id error))callback {
     [WXDevToolType setDebug:NO];
     [WXSDKEngine restart];
-    [self clearGarbage];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
-    callback(nil);
+    // we need to wait for jsfm loaded. From gurisxie
+    [self performSelector:@selector(disableWithCallback:) withObject:callback afterDelay:0.5];
+}
+
+-(void)disableWithCallback:(void (^)(id error))callback{
+    [self _executeBridgeThead:^{
+        [self clearGarbage];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
+        callback(nil);
+    }];
 }
 
 - (void)domain:(WXDebugDomain *)domain sendLogLevel:(NSString *)level withCallback:(void (^)(id error))callback {
