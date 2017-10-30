@@ -73,6 +73,9 @@
      }
      */
     [WXTracingManager switchTracing:NO];
+    if(![WXTracingManager isTracing]) {
+        return;
+    }
     if(![WXTracingViewControllerManager sharedInstance].isLoad){
         [WXTracingViewControllerManager sharedInstance].isLoad = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
