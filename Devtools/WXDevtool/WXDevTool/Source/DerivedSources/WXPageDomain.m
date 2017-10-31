@@ -170,19 +170,11 @@ static NSString * const WXScreencastChangeNotification = @"WXScreencastChangeNot
 
 - (void)swizzledFrameChangeMethod
 {
-    Method original, swizzle;
-    Class viewClass = [UIView class];
-//    original = class_getInstanceMethod(viewClass, @selector(setNeedsLayout));
-//    swizzle = class_getInstanceMethod(viewClass, sel_registerName("devtool_setNeedsLayout"));
-//    method_exchangeImplementations(original, swizzle);
-    
-//    original = class_getInstanceMethod(viewClass, @selector(setNeedsDisplay));
-//    swizzle = class_getInstanceMethod(viewClass, sel_registerName("devtool_setNeedsDisplay"));
-//    method_exchangeImplementations(original, swizzle);
-    
     // I think setFrame has enough. From gurisxie
-    original = class_getInstanceMethod(viewClass, @selector(setFrame:));
-    swizzle = class_getInstanceMethod(viewClass, sel_registerName("devtool_setFrame:"));
+    Method original, swizzle;
+    Class componentClass = [WXComponent class];
+    original = class_getInstanceMethod(componentClass, @selector(setNeedsLayout));
+    swizzle = class_getInstanceMethod(componentClass, sel_registerName("devtool_setNeedsLayout"));
     method_exchangeImplementations(original, swizzle);
 }
 
@@ -415,20 +407,20 @@ static NSString * const WXScreencastChangeNotification = @"WXScreencastChangeNot
 
 @end
 
-@implementation UIView (ScreencastChange)
+@implementation WXComponent (ScreencastChange)
 
 - (void)devtool_setNeedsLayout
 {
     [self devtool_setNeedsLayout];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(postNotificationScreencastChangeNotification) object:nil];
-    [self performSelector:@selector(postNotificationScreencastChangeNotification) withObject:nil afterDelay:10];
+    [self performSelector:@selector(postNotificationScreencastChangeNotification) withObject:nil afterDelay:2];
 }
 
 - (void)devtool_setNeedsDisplay
 {
     [self devtool_setNeedsDisplay];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(postNotificationScreencastChangeNotification) object:nil];
-    [self performSelector:@selector(postNotificationScreencastChangeNotification) withObject:nil afterDelay:10];
+    [self performSelector:@selector(postNotificationScreencastChangeNotification) withObject:nil afterDelay:2];
 }
 
 - (void)devtool_setFrame:(CGRect)frame

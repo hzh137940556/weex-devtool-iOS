@@ -182,32 +182,30 @@
 
 #pragma mark - WXCommandDelegate
 - (void)domain:(WXDynamicDebuggerDomain *)domain enableWithCallback:(void (^)(id error))callback {
-    [WXDevToolType setDebug:YES];
-    [WXSDKEngine restart];
-    // we need to wait for jsfm loaded. From gurisxie
-    [self performSelector:@selector(enableWithCallback:) withObject:callback afterDelay:0.5];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [WXDevToolType setDebug:YES];
+        [WXSDKEngine restart];
+    });
+    [self performSelector:@selector(enableWithCallback:) withObject:callback afterDelay:1];
 }
 
 -(void)enableWithCallback:(void (^)(id error))callback{
-    [self _executeBridgeThead:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
-        callback(nil);
-    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
+    callback(nil);
 }
 
 - (void)domain:(WXDynamicDebuggerDomain *)domain disableWithCallback:(void (^)(id error))callback {
-    [WXDevToolType setDebug:NO];
-    [WXSDKEngine restart];
-    // we need to wait for jsfm loaded. From gurisxie
-    [self performSelector:@selector(disableWithCallback:) withObject:callback afterDelay:0.5];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [WXDevToolType setDebug:NO];
+        [WXSDKEngine restart];
+        [self clearGarbage];
+    });
+    [self performSelector:@selector(disableWithCallback:) withObject:callback afterDelay:1];
 }
 
 -(void)disableWithCallback:(void (^)(id error))callback{
-    [self _executeBridgeThead:^{
-        [self clearGarbage];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
-        callback(nil);
-    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshInstance" object:nil];
+    callback(nil);
 }
 
 - (void)domain:(WXDebugDomain *)domain sendLogLevel:(NSString *)level withCallback:(void (^)(id error))callback {
@@ -259,7 +257,9 @@
         }
         //call native
         WXLogInfo(@"Calling native... instancdId:%@, methods:%@, callbackId:%@", instanceId, [WXUtility JSONString:methods], callbackId);
-        _nativeCallBlock(instanceId, methods, callbackId);
+        if(_nativeCallBlock){
+            _nativeCallBlock(instanceId, methods, callbackId);
+        }
         callback(nil);
     }];
 }
