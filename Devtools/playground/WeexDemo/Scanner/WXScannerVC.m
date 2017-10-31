@@ -10,8 +10,7 @@
 #import "AppDelegate.h"
 #import "UIViewController+WXDemoNaviBar.h"
 #import "WXDemoViewController.h"
-#import <TBWXDevTool/WXDevTool.h>
-//#import "WXDevTool.h"
+#import <WXDevTool/WXDevTool.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <WeexSDK/WeexSDK.h>
 
