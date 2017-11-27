@@ -8,7 +8,7 @@
 
 #import "WXMultilineTableViewCell.h"
 
-NSString *const kFLEXMultilineTableViewCellIdentifier = @"kFLEXMultilineTableViewCellIdentifier";
+NSString *const kWXFLEXMultilineTableViewCellIdentifier = @"kFLEXMultilineTableViewCellIdentifier";
 
 @implementation WXMultilineTableViewCell
 

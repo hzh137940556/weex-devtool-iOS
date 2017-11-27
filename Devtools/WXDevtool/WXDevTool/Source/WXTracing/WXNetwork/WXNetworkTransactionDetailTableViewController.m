@@ -14,20 +14,20 @@
 #import "WXMultilineTableViewCell.h"
 #import "WXTracingUtility.h"
 
-@interface FLEXNetworkDetailSection : NSObject
+@interface WXFLEXNetworkDetailSection : NSObject
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSArray *rows;
 
 @end
 
-@implementation FLEXNetworkDetailSection
+@implementation WXFLEXNetworkDetailSection
 
 @end
 
 typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
-@interface FLEXNetworkDetailRow : NSObject
+@interface WXFLEXNetworkDetailRow : NSObject
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *detailText;
@@ -35,7 +35,7 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
 @end
 
-@implementation FLEXNetworkDetailRow
+@implementation WXFLEXNetworkDetailRow
 
 @end
 
@@ -62,7 +62,7 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 {
     [super viewDidLoad];
 
-    [self.tableView registerClass:[WXMultilineTableViewCell class] forCellReuseIdentifier:kFLEXMultilineTableViewCellIdentifier];
+    [self.tableView registerClass:[WXMultilineTableViewCell class] forCellReuseIdentifier:kWXFLEXMultilineTableViewCellIdentifier];
 }
 
 
@@ -87,23 +87,23 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 {
     NSMutableArray *sections = [NSMutableArray array];
 
-    FLEXNetworkDetailSection *generalSection = [[self class] generalSectionForTransaction:self.transaction];
+    WXFLEXNetworkDetailSection *generalSection = [[self class] generalSectionForTransaction:self.transaction];
     if ([generalSection.rows count] > 0) {
         [sections addObject:generalSection];
     }
-    FLEXNetworkDetailSection *requestHeadersSection = [[self class] requestHeadersSectionForTransaction:self.transaction];
+    WXFLEXNetworkDetailSection *requestHeadersSection = [[self class] requestHeadersSectionForTransaction:self.transaction];
     if ([requestHeadersSection.rows count] > 0) {
         [sections addObject:requestHeadersSection];
     }
-    FLEXNetworkDetailSection *queryParametersSection = [[self class] queryParametersSectionForTransaction:self.transaction];
+    WXFLEXNetworkDetailSection *queryParametersSection = [[self class] queryParametersSectionForTransaction:self.transaction];
     if ([queryParametersSection.rows count] > 0) {
         [sections addObject:queryParametersSection];
     }
-    FLEXNetworkDetailSection *postBodySection = [[self class] postBodySectionForTransaction:self.transaction];
+    WXFLEXNetworkDetailSection *postBodySection = [[self class] postBodySectionForTransaction:self.transaction];
     if ([postBodySection.rows count] > 0) {
         [sections addObject:postBodySection];
     }
-    FLEXNetworkDetailSection *responseHeadersSection = [[self class] responseHeadersSectionForTransaction:self.transaction];
+    WXFLEXNetworkDetailSection *responseHeadersSection = [[self class] responseHeadersSectionForTransaction:self.transaction];
     if ([responseHeadersSection.rows count] > 0) {
         [sections addObject:responseHeadersSection];
     }
@@ -123,13 +123,13 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 {
     NSMutableString *requestDetailString = [NSMutableString string];
 
-    for (FLEXNetworkDetailSection *section in self.sections) {
+    for (WXFLEXNetworkDetailSection *section in self.sections) {
         if ([section.rows count] > 0) {
             if ([section.title length] > 0) {
                 [requestDetailString appendString:section.title];
                 [requestDetailString appendString:@"\n\n"];
             }
-            for (FLEXNetworkDetailRow *row in section.rows) {
+            for (WXFLEXNetworkDetailRow *row in section.rows) {
                 NSString *rowDescription = [[[self class] attributedTextForRow:row] string];
                 if ([rowDescription length] > 0) {
                     [requestDetailString appendString:rowDescription];
@@ -152,21 +152,21 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    FLEXNetworkDetailSection *sectionModel = self.sections[section];
+    WXFLEXNetworkDetailSection *sectionModel = self.sections[section];
     return [sectionModel.rows count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    FLEXNetworkDetailSection *sectionModel = self.sections[section];
+    WXFLEXNetworkDetailSection *sectionModel = self.sections[section];
     return sectionModel.title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WXMultilineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kFLEXMultilineTableViewCellIdentifier forIndexPath:indexPath];
+    WXMultilineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kWXFLEXMultilineTableViewCellIdentifier forIndexPath:indexPath];
 
-    FLEXNetworkDetailRow *rowModel = [self rowModelAtIndexPath:indexPath];
+    WXFLEXNetworkDetailRow *rowModel = [self rowModelAtIndexPath:indexPath];
 
     cell.textLabel.attributedText = [[self class] attributedTextForRow:rowModel];
     cell.accessoryType = rowModel.selectionFuture ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
@@ -177,7 +177,7 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FLEXNetworkDetailRow *rowModel = [self rowModelAtIndexPath:indexPath];
+    WXFLEXNetworkDetailRow *rowModel = [self rowModelAtIndexPath:indexPath];
 
     UIViewController *viewControllerToPush = nil;
     if (rowModel.selectionFuture) {
@@ -193,15 +193,15 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FLEXNetworkDetailRow *row = [self rowModelAtIndexPath:indexPath];
+    WXFLEXNetworkDetailRow *row = [self rowModelAtIndexPath:indexPath];
     NSAttributedString *attributedText = [[self class] attributedTextForRow:row];
     BOOL showsAccessory = row.selectionFuture != nil;
     return [WXMultilineTableViewCell preferredHeightWithAttributedText:attributedText inTableViewWidth:self.tableView.bounds.size.width style:UITableViewStyleGrouped showsAccessory:showsAccessory];
 }
 
-- (FLEXNetworkDetailRow *)rowModelAtIndexPath:(NSIndexPath *)indexPath
+- (WXFLEXNetworkDetailRow *)rowModelAtIndexPath:(NSIndexPath *)indexPath
 {
-    FLEXNetworkDetailSection *sectionModel = self.sections[indexPath.section];
+    WXFLEXNetworkDetailSection *sectionModel = self.sections[indexPath.section];
     return sectionModel.rows[indexPath.row];
 }
 
@@ -220,14 +220,14 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
     if (action == @selector(copy:)) {
-        FLEXNetworkDetailRow *row = [self rowModelAtIndexPath:indexPath];
+        WXFLEXNetworkDetailRow *row = [self rowModelAtIndexPath:indexPath];
         [[UIPasteboard generalPasteboard] setString:row.detailText];
     }
 }
 
 #pragma mark - View Configuration
 
-+ (NSAttributedString *)attributedTextForRow:(FLEXNetworkDetailRow *)row
++ (NSAttributedString *)attributedTextForRow:(WXFLEXNetworkDetailRow *)row
 {
     NSDictionary *titleAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0],
                                        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.5 alpha:1.0] };
@@ -245,11 +245,11 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
 #pragma mark - Table Data Generation
 
-+ (FLEXNetworkDetailSection *)generalSectionForTransaction:(WXNetworkTransaction *)transaction
++ (WXFLEXNetworkDetailSection *)generalSectionForTransaction:(WXNetworkTransaction *)transaction
 {
     NSMutableArray *rows = [NSMutableArray array];
 
-    FLEXNetworkDetailRow *requestURLRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *requestURLRow = [[WXFLEXNetworkDetailRow alloc] init];
     requestURLRow.title = @"Request URL";
     NSURL *url = transaction.request.URL;
     requestURLRow.detailText = url.absoluteString;
@@ -260,18 +260,18 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
     };
     [rows addObject:requestURLRow];
 
-    FLEXNetworkDetailRow *requestMethodRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *requestMethodRow = [[WXFLEXNetworkDetailRow alloc] init];
     requestMethodRow.title = @"Request Method";
     requestMethodRow.detailText = transaction.request.HTTPMethod;
     [rows addObject:requestMethodRow];
 
     if ([transaction.cachedRequestBody length] > 0) {
-        FLEXNetworkDetailRow *postBodySizeRow = [[FLEXNetworkDetailRow alloc] init];
+        WXFLEXNetworkDetailRow *postBodySizeRow = [[WXFLEXNetworkDetailRow alloc] init];
         postBodySizeRow.title = @"Request Body Size";
         postBodySizeRow.detailText = [NSByteCountFormatter stringFromByteCount:[transaction.cachedRequestBody length] countStyle:NSByteCountFormatterCountStyleBinary];
         [rows addObject:postBodySizeRow];
 
-        FLEXNetworkDetailRow *postBodyRow = [[FLEXNetworkDetailRow alloc] init];
+        WXFLEXNetworkDetailRow *postBodyRow = [[WXFLEXNetworkDetailRow alloc] init];
         postBodyRow.title = @"Request Body";
         postBodyRow.detailText = @"tap to view";
         postBodyRow.selectionFuture = ^{
@@ -290,20 +290,20 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
 
     NSString *statusCodeString = [WXTracingUtility statusCodeStringFromURLResponse:transaction.response];
     if ([statusCodeString length] > 0) {
-        FLEXNetworkDetailRow *statusCodeRow = [[FLEXNetworkDetailRow alloc] init];
+        WXFLEXNetworkDetailRow *statusCodeRow = [[WXFLEXNetworkDetailRow alloc] init];
         statusCodeRow.title = @"Status Code";
         statusCodeRow.detailText = statusCodeString;
         [rows addObject:statusCodeRow];
     }
 
     if (transaction.error) {
-        FLEXNetworkDetailRow *errorRow = [[FLEXNetworkDetailRow alloc] init];
+        WXFLEXNetworkDetailRow *errorRow = [[WXFLEXNetworkDetailRow alloc] init];
         errorRow.title = @"Error";
         errorRow.detailText = transaction.error.localizedDescription;
         [rows addObject:errorRow];
     }
 
-    FLEXNetworkDetailRow *responseBodyRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *responseBodyRow = [[WXFLEXNetworkDetailRow alloc] init];
     responseBodyRow.title = @"Response Body";
     NSData *responseData = [[WXNetworkRecorder defaultRecorder] cachedResponseBodyForTransaction:transaction];
     if ([responseData length] > 0) {
@@ -332,17 +332,17 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
     }
     [rows addObject:responseBodyRow];
 
-    FLEXNetworkDetailRow *responseSizeRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *responseSizeRow = [[WXFLEXNetworkDetailRow alloc] init];
     responseSizeRow.title = @"Response Size";
     responseSizeRow.detailText = [NSByteCountFormatter stringFromByteCount:transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary];
     [rows addObject:responseSizeRow];
 
-    FLEXNetworkDetailRow *mimeTypeRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *mimeTypeRow = [[WXFLEXNetworkDetailRow alloc] init];
     mimeTypeRow.title = @"MIME Type";
     mimeTypeRow.detailText = transaction.response.MIMEType;
     [rows addObject:mimeTypeRow];
 
-    FLEXNetworkDetailRow *mechanismRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *mechanismRow = [[WXFLEXNetworkDetailRow alloc] init];
     mechanismRow.title = @"Mechanism";
     mechanismRow.detailText = transaction.requestMechanism;
     [rows addObject:mechanismRow];
@@ -350,52 +350,52 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
     NSDateFormatter *startTimeFormatter = [[NSDateFormatter alloc] init];
     startTimeFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.SSS";
 
-    FLEXNetworkDetailRow *localStartTimeRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *localStartTimeRow = [[WXFLEXNetworkDetailRow alloc] init];
     localStartTimeRow.title = [NSString stringWithFormat:@"Start Time (%@)", [[NSTimeZone localTimeZone] abbreviationForDate:transaction.startTime]];
     localStartTimeRow.detailText = [startTimeFormatter stringFromDate:transaction.startTime];
     [rows addObject:localStartTimeRow];
 
     startTimeFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
 
-    FLEXNetworkDetailRow *utcStartTimeRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *utcStartTimeRow = [[WXFLEXNetworkDetailRow alloc] init];
     utcStartTimeRow.title = @"Start Time (UTC)";
     utcStartTimeRow.detailText = [startTimeFormatter stringFromDate:transaction.startTime];
     [rows addObject:utcStartTimeRow];
 
-    FLEXNetworkDetailRow *unixStartTime = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *unixStartTime = [[WXFLEXNetworkDetailRow alloc] init];
     unixStartTime.title = @"Unix Start Time";
     unixStartTime.detailText = [NSString stringWithFormat:@"%f", [transaction.startTime timeIntervalSince1970]];
     [rows addObject:unixStartTime];
 
-    FLEXNetworkDetailRow *durationRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *durationRow = [[WXFLEXNetworkDetailRow alloc] init];
     durationRow.title = @"Total Duration";
     durationRow.detailText = [WXTracingUtility stringFromRequestDuration:transaction.duration];
     [rows addObject:durationRow];
 
-    FLEXNetworkDetailRow *latencyRow = [[FLEXNetworkDetailRow alloc] init];
+    WXFLEXNetworkDetailRow *latencyRow = [[WXFLEXNetworkDetailRow alloc] init];
     latencyRow.title = @"Latency";
     latencyRow.detailText = [WXTracingUtility stringFromRequestDuration:transaction.latency];
     [rows addObject:latencyRow];
 
-    FLEXNetworkDetailSection *generalSection = [[FLEXNetworkDetailSection alloc] init];
+    WXFLEXNetworkDetailSection *generalSection = [[WXFLEXNetworkDetailSection alloc] init];
     generalSection.title = @"General";
     generalSection.rows = rows;
 
     return generalSection;
 }
 
-+ (FLEXNetworkDetailSection *)requestHeadersSectionForTransaction:(WXNetworkTransaction *)transaction
++ (WXFLEXNetworkDetailSection *)requestHeadersSectionForTransaction:(WXNetworkTransaction *)transaction
 {
-    FLEXNetworkDetailSection *requestHeadersSection = [[FLEXNetworkDetailSection alloc] init];
+    WXFLEXNetworkDetailSection *requestHeadersSection = [[WXFLEXNetworkDetailSection alloc] init];
     requestHeadersSection.title = @"Request Headers";
     requestHeadersSection.rows = [self networkDetailRowsFromDictionary:transaction.request.allHTTPHeaderFields];
 
     return requestHeadersSection;
 }
 
-+ (FLEXNetworkDetailSection *)postBodySectionForTransaction:(WXNetworkTransaction *)transaction
++ (WXFLEXNetworkDetailSection *)postBodySectionForTransaction:(WXNetworkTransaction *)transaction
 {
-    FLEXNetworkDetailSection *postBodySection = [[FLEXNetworkDetailSection alloc] init];
+    WXFLEXNetworkDetailSection *postBodySection = [[WXFLEXNetworkDetailSection alloc] init];
     postBodySection.title = @"Request Body Parameters";
     if ([transaction.cachedRequestBody length] > 0) {
         NSString *contentType = [transaction.request valueForHTTPHeaderField:@"Content-Type"];
@@ -407,19 +407,19 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
     return postBodySection;
 }
 
-+ (FLEXNetworkDetailSection *)queryParametersSectionForTransaction:(WXNetworkTransaction *)transaction
++ (WXFLEXNetworkDetailSection *)queryParametersSectionForTransaction:(WXNetworkTransaction *)transaction
 {
     NSDictionary *queryDictionary = [WXTracingUtility dictionaryFromQuery:transaction.request.URL.query];
-    FLEXNetworkDetailSection *querySection = [[FLEXNetworkDetailSection alloc] init];
+    WXFLEXNetworkDetailSection *querySection = [[WXFLEXNetworkDetailSection alloc] init];
     querySection.title = @"Query Parameters";
     querySection.rows = [self networkDetailRowsFromDictionary:queryDictionary];
 
     return querySection;
 }
 
-+ (FLEXNetworkDetailSection *)responseHeadersSectionForTransaction:(WXNetworkTransaction *)transaction
++ (WXFLEXNetworkDetailSection *)responseHeadersSectionForTransaction:(WXNetworkTransaction *)transaction
 {
-    FLEXNetworkDetailSection *responseHeadersSection = [[FLEXNetworkDetailSection alloc] init];
+    WXFLEXNetworkDetailSection *responseHeadersSection = [[WXFLEXNetworkDetailSection alloc] init];
     responseHeadersSection.title = @"Response Headers";
     if ([transaction.response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)transaction.response;
@@ -434,7 +434,7 @@ typedef UIViewController *(^FLEXNetworkDetailRowSelectionFuture)(void);
     NSArray *sortedKeys = [[dictionary allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     for (NSString *key in sortedKeys) {
         NSString *value = dictionary[key];
-        FLEXNetworkDetailRow *row = [[FLEXNetworkDetailRow alloc] init];
+        WXFLEXNetworkDetailRow *row = [[WXFLEXNetworkDetailRow alloc] init];
         row.title = key;
         row.detailText = [value description];
         [rows addObject:row];

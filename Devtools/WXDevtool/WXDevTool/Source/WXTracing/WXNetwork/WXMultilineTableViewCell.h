@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const kFLEXMultilineTableViewCellIdentifier;
+extern NSString *const kWXFLEXMultilineTableViewCellIdentifier;
 
 @interface WXMultilineTableViewCell : UITableViewCell
 
