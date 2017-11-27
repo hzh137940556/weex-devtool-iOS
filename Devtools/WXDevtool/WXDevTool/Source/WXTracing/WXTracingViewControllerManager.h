@@ -17,4 +17,5 @@
 + (void)loadTracingView;
 + (BOOL)isLoadTracing;
 +(void)showButton;
++(void)removeWeexView;
 @end

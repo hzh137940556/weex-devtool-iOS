@@ -64,15 +64,7 @@
 
 +(void)loadTracingView
 {
-    
-    /*
-     // Zechang.xzc edit,dont start Tracing by default,but show zhe weex view
-     [WXTracingManager switchTracing:YES];
-     if(![WXTracingManager isTracing]) {
-     return;
-     }
-     */
-    [WXTracingManager switchTracing:NO];
+    [WXTracingManager switchTracing:YES];
     if(![WXTracingManager isTracing]) {
         return;
     }
@@ -105,6 +97,12 @@
         });
     });
     
+}
+
++(void)removeWeexView
+{
+    WXTracingViewControllerManager *instance = [WXTracingViewControllerManager sharedInstance];
+    instance.wind.hidden = YES;
 }
 
 +(void)addTracingView

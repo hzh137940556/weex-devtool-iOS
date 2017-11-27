@@ -19,7 +19,7 @@
 @implementation WXShowTracingTask
 @end
 
-@interface WXRenderTracingViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface WXRenderTracingViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 @property (strong,nonatomic) UITableView *table;
 @property (strong,nonatomic) NSArray     *content;
@@ -78,8 +78,17 @@
         self.tracingButtonTitle = @"关闭监控";
     }else{
         self.tracingButtonTitle = @"打开监控";
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"" message:@"是否继续显示Weex监控悬浮框？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+        [alertview show];
     }
     [self.tracingButton setTitle:self.tracingButtonTitle forState:UIControlStateNormal];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    if (buttonIndex == 0) {
+        [WXTracingViewControllerManager removeWeexView];
+    }
 }
 
 -(void)refreshNewData
